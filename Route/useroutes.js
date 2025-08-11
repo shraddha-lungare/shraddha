@@ -19,9 +19,14 @@ router.post("/register", async (req, res) => {
       email,
       contact,
       city,
-      password,
-      
-    });
+      password,});
+      res.status(201).json({ message: "User registered successfully", user: newUser });
+  } catch (error) {
+    console.error("Register error:", error);
+    res.status(500).json({ error: "Error creating user" });
+  }
+});
+
 // POST - Create Account
 router.post("/create", async (req, res) => {
     try {
@@ -37,12 +42,7 @@ router.post("/create", async (req, res) => {
         res.status(500).json({ message: "Error creating account", error });
     }
 });
-    res.status(201).json({ message: "User registered successfully", user: newUser });
-  } catch (error) {
-    console.error("Register error:", error);
-    res.status(500).json({ error: "Error creating user" });
-  }
-});
+  
 
 // ✅ LOGIN: Authenticate user
 router.post("/login", async (req, res) => {
