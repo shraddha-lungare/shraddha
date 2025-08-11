@@ -22,7 +22,7 @@ router.post("/register", async (req, res) => {
       email,
       contact,
       city,
-      password: hashedPassword
+      password,
       
     });
 
@@ -31,6 +31,21 @@ router.post("/register", async (req, res) => {
     console.error("Register error:", error);
     res.status(500).json({ error: "Error creating user" });
   }
+});
+// POST - Create Account
+router.post("/create", async (req, res) => {
+    try {
+        const { name, email, password, contact, city } = req.body;
+
+        // Save to DB
+        const newAccount = new Account({ name, email, password, contact, city });
+        await newAccount.save();
+
+        res.status(201).json({ message: "Account created successfully", account: newAccount });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error creating account", error });
+    }
 });
 
 // ✅ LOGIN: Authenticate user
