@@ -25,7 +25,21 @@ router.post("/register", async (req, res) => {
       password: hashedPassword
       
     });
+// POST - Create Account
+router.post("/create", async (req, res) => {
+    try {
+        const { name, email, password, contact, city } = req.body;
 
+        // Save to DB
+        const newAccount = new Account({ name, email, password, contact, city });
+        await newAccount.save();
+
+        res.status(201).json({ message: "Account created successfully", account: newAccount });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error creating account", error });
+    }
+});
     res.status(201).json({ message: "User registered successfully", user: newUser });
   } catch (error) {
     console.error("Register error:", error);
