@@ -6,7 +6,7 @@ const User = require("./../Model/user");
 // ✅ CREATE: Register new user
 router.post("/register", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password,contact,city } = req.body;
 
     // Optional: Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -20,7 +20,10 @@ router.post("/register", async (req, res) => {
     const newUser = await User.create({
       name,
       email,
+      contact,
+      city,
       password: hashedPassword
+      
     });
 
     res.status(201).json({ message: "User registered successfully", user: newUser });
@@ -52,7 +55,10 @@ router.post("/login", async (req, res) => {
       message: "Login successful",
       user: {
         name: user.name,
-        email: user.email
+        email: user.email,
+        contact:user.contact,
+        city:user.city,
+        id:user.id
       }
     });
   } catch (error) {
@@ -72,7 +78,7 @@ router.get("/users-get", async (req, res) => {
 });
 
 // ✅ Get user details by ID
-router.get("/users/:id", async (req, res) => {
+router.get("/user/:id", async (req, res) => {
   try {
     const userId = req.params.id;
 
