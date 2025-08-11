@@ -33,7 +33,7 @@ router.post("/create", async (req, res) => {
         const { name, email, password, contact, city } = req.body;
 
         // Save to DB
-        const newAccount = new Account({ name, email, password, contact, city });
+        const newAccount = new User({ name, email, password, contact, city });
         await newAccount.save();
 
         res.status(201).json({ message: "Account created successfully", account: newAccount });
